@@ -1,0 +1,15 @@
+version: "3.7"
+
+services:
+  db:
+    image: mariadb
+    ports:
+      - "3307:3306"
+    volumes:
+      - mariadb_volume:/var/lib/mysql
+    environment:
+      MARIADB_USER: user
+      MARIADB_PASSWORD: pass
+      MARIADB_ROOT_PASSWORD: password
+volumes:
+  mariadb_volume:

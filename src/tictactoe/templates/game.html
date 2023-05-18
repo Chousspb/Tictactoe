@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Игра {{ game_id }}</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        .game-container {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        .game-message {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+
+        table td {
+            width: 60px;
+            height: 60px;
+            text-align: center;
+            font-size: 24px;
+            border: 1px solid #000;
+        }
+
+        input[type="radio"] {
+            visibility: hidden;
+        }
+
+        input[type="radio"] + label {
+            display: block;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 18px;
+            text-decoration: none;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const radioInputs = document.querySelectorAll("input[type='radio']");
+            const cells = document.querySelectorAll("table td");
+
+            radioInputs.forEach((input, index) => {
+                input.addEventListener("change", function() {
+                    const chosenCell = cells[index];
+                    const chosenLabel = chosenCell.querySelector("label");
+
+                    if (chosenCell.classList.contains("chosen")) {
+                        chosenCell.classList.remove("chosen");
+                    } else {
+                        chosenCell.classList.add("chosen");
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="game-container">
+    <h1>Игра №{{ game_id }}</h1>
+    {% if winner %}
+        <div class="game-message">В этой игре победили: {{ winner }}</div>
+    {% else %}
+        <div class="game-message">Сейчас ход: {{ item_string }}</div>
+    {% endif %}
+
+    <form class="game" action="/tic-tac/game/{{ game_id }}" method="post">{% csrf_token %}
+        <input type="hidden" name="item_type" value="{{ item_type }}">
+        <input type="hidden" name="game_id" value="{{ game_id }}">
+        <table>
+            {% for row in rows %}
+                <tr>
+                    {% for col in row %}
+                        <td>
+                            {% if col.is_active %}
+                                <input type="radio" value="{{ col.cell }}" name="radio-choose" id="{{ col.cell }}">
+                                <label for="{{ col.cell }}"></label>
+                            {% elif col.chosen %}
+                                <div>{{ col.chosen }}</div>
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+
+        {% if form_error.radio_missed %}
+            <div>{{ form_error.radio_missed }}</div>
+        {% endif %}
+
+        {% if winner %}
+            <a href="{% url 'new_game' %}" class="btn">Начать новую игру</a>
+        {% else %}
+            <input type="submit" value="Сделать ход" class="btn">
+        {% endif %}
+    </form>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const cells = document.querySelectorAll('.cell');
+
+    cells.forEach(function(cell) {
+      cell.addEventListener('click', function() {
+        const radioChoose = document.querySelector('input[name="radio-choose"]');
+        radioChoose.value = this.dataset.cell;
+        this.querySelector('input[type="radio"]').checked = true;
+      });
+    });
+  });
+</script>
+</body>
+</html>
