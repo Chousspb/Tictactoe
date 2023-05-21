@@ -2,6 +2,7 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from tictactoe.models import Game
 
+
 def new_game(request: HttpRequest):
     new_game = Game()
     new_game.save()

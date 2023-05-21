@@ -62,25 +62,6 @@
             cursor: pointer;
         }
     </style>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const radioInputs = document.querySelectorAll("input[type='radio']");
-            const cells = document.querySelectorAll("table td");
-
-            radioInputs.forEach((input, index) => {
-                input.addEventListener("change", function() {
-                    const chosenCell = cells[index];
-                    const chosenLabel = chosenCell.querySelector("label");
-
-                    if (chosenCell.classList.contains("chosen")) {
-                        chosenCell.classList.remove("chosen");
-                    } else {
-                        chosenCell.classList.add("chosen");
-                    }
-                });
-            });
-        });
-    </script>
 </head>
 <body>
 <div class="game-container">

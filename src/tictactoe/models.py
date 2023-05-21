@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models import Q
 from itertools import chain
 
+
 class Game(models.Model):
     size = models.IntegerField(default=3)
     winner = models.CharField(default=None, blank=True, null=True, max_length=10)
@@ -39,6 +40,7 @@ class Game(models.Model):
 
     class Meta:
         db_table = "tictactoe_games"
+
 
 class Step(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
