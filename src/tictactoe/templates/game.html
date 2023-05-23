@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <title>Игра {{ game_id }}</title>
     <style>
@@ -104,17 +105,18 @@
     </form>
 </div>
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const cells = document.querySelectorAll('.cell');
 
-    cells.forEach(function(cell) {
-      cell.addEventListener('click', function() {
-        const radioChoose = document.querySelector('input[name="radio-choose"]');
-        radioChoose.value = this.dataset.cell;
-        this.querySelector('input[type="radio"]').checked = true;
-      });
+  document.addEventListener('DOMContentLoaded', function() {
+  const cells = document.querySelectorAll('.cell');
+
+  cells.forEach(function(cell) {
+    cell.addEventListener('click', function() {
+      const radioChoose = this.querySelector('input[type="radio"]');
+      radioChoose.checked = true;
+      this.querySelector('label').innerText = 'X';
     });
   });
+});
 </script>
 </body>
 </html>

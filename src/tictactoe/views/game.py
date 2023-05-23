@@ -52,7 +52,7 @@ def game(request: HttpRequest, game_id: int):
                 new_step.save()
 
                 game.current_item = 'zero' if item_type == 'cross' else 'cross'
-                game.check_winner()  # Проверка наличия победителя
+                game.check_winner()
 
                 game.save()
 

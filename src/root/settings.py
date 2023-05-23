@@ -78,9 +78,9 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
         "HOST": "127.0.0.1",
-        "PORT": 3307,
+        "PORT": 3308,
         "NAME": "sbc2",
-        "USER": "django_sbc",
+        "USER": "root",
         "PASSWORD": "password",
         "TIME_ZONE": "Europe/Moscow"
     }
