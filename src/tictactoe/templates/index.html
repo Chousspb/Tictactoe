@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>New Game</title>
+    <title>{{ page_title }}</title>
     <style>
         body {
             display: flex;
@@ -33,6 +33,14 @@
     </style>
 </head>
 <body>
+<div>
+    {% for game in games %}
+        <div>
+            Игра № {{ game.id }} - {% if game.winner %} Победитель: {{ game.winner }} {% else %} Ничья {% endif %}
+
+        </div>
+    {% endfor %}
+</div>
 <form action="/tic-tac/create-new-game" method="post">
     {% csrf_token %}
     <input type="submit" value="Новая игра">
