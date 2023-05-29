@@ -9,11 +9,11 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            font-family: Arial, sans-serif;
+            font-family: "Arial", sans-serif;
             background-color: #f5f5f5;
         }
 
-        form {
+        .container {
             text-align: center;
             padding: 20px;
             background-color: #fff;
@@ -21,9 +21,24 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
-        input[type="submit"] {
+        .game {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .game a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .winner {
+            font-weight: bold;
+        }
+
+        .new-game-btn {
             padding: 10px 20px;
             font-size: 18px;
+            font-family: "Times New Roman", serif;
             background-color: #007bff;
             color: #fff;
             border: none;
@@ -33,17 +48,20 @@
     </style>
 </head>
 <body>
-<div>
+<div class="container">
     {% for game in games %}
-        <div>
-            Игра № {{ game.id }} - {% if game.winner %} Победитель: {{ game.winner }} {% else %} Ничья {% endif %}
-
+        <div class="game">
+            Игра №{{ game.id }} - {% if game.winner %}
+            Победитель: <span class="winner">{{ game.winner }}</span>
+            {% else %}
+            Игра не закончена - <a href="/tic-tac/game/{{ game.id }}">Закончить</a>
+            {% endif %}
         </div>
     {% endfor %}
+    <form action="/tic-tac/create-new-game" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Новая игра" class="new-game-btn">
+    </form>
 </div>
-<form action="/tic-tac/create-new-game" method="post">
-    {% csrf_token %}
-    <input type="submit" value="Новая игра">
-</form>
 </body>
 </html>

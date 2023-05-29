@@ -7,6 +7,5 @@ import root.views.index
 urlpatterns = [
     path("", root.views.index.IndexView.as_view()),
     path("admin/", admin.site.urls),
-    # tic tac toe
     path("tic-tac/", include(tic_tac_urlpatterns))
     ]

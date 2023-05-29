@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
     <title>Игра {{ game_id }}</title>
     <style>
@@ -51,6 +50,11 @@
             cursor: pointer;
         }
 
+        .btn-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
         .btn {
             display: inline-block;
             padding: 10px 20px;
@@ -61,6 +65,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            margin-right: 10px;
         }
     </style>
 </head>
@@ -97,26 +102,16 @@
             <div>{{ form_error.radio_missed }}</div>
         {% endif %}
 
-        {% if winner %}
-            <a href="{% url 'new_game' %}" class="btn">Начать новую игру</a>
-        {% else %}
-            <input type="submit" value="Сделать ход" class="btn">
-        {% endif %}
+        <div class="btn-container">
+            {% if winner %}
+                <a href="{% url 'new_game' %}" class="btn">Начать новую игру</a>
+                <a href="{% url 'index' %}" class="btn">Список игр</a>
+            {% else %}
+                <input type="submit" value="Сделать ход" class="btn">
+            {% endif %}
+        </div>
     </form>
 </div>
-<script>
 
-  document.addEventListener('DOMContentLoaded', function() {
-  const cells = document.querySelectorAll('.cell');
-
-  cells.forEach(function(cell) {
-    cell.addEventListener('click', function() {
-      const radioChoose = this.querySelector('input[type="radio"]');
-      radioChoose.checked = true;
-      this.querySelector('label').innerText = 'X';
-    });
-  });
-});
-</script>
 </body>
 </html>

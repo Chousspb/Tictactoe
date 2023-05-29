@@ -80,6 +80,8 @@ def game(request: HttpRequest, game_id: int):
         "rows": rows,
         "winner": game.winner
     }
-
-    return render(request, "tictactoe/templates/game.html", context=context)
+    response = render(request, "tictactoe/templates/game.html", context=context)
+    if request.method == "POST":
+        response.set_cookie("game_id", f"{game_id}")
+    return response
 
