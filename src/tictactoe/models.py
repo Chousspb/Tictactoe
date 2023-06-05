@@ -1,6 +1,11 @@
 from django.db import models
 from django.db.models import Q
 from itertools import chain
+from django.contrib.auth.models import User
+
+
+class Game(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 class Game(models.Model):
@@ -37,6 +42,9 @@ class Game(models.Model):
                 self.winner = 'Нолики'
                 self.save()
                 return
+        if self.step_set.count() == self.size ** 2:
+            self.winner = 'Ничья'
+            self.save()
 
     class Meta:
         db_table = "tictactoe_games"

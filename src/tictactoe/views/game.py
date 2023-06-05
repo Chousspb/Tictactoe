@@ -1,10 +1,14 @@
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest
 from django.shortcuts import render, redirect
 from tictactoe.models import Game, Step
+from django.contrib.auth.decorators import login_required
+from accounts.models import CustomUser
 
 
-def check_winner(game: Game, coord_x: int, coord_y: int) -> str:
-    # Проверка по горизонтали
+@login_required
+def check_winner(request: HttpRequest, game: Game, coord_x: int, coord_y: int) -> str:
+    custom_user = CustomUser.objects.get(user=request.user)
+    game = Game.objects.get(id=game_id, custom_user=custom_user)
     row_steps = Step.objects.filter(game=game, coord_x=coord_x).order_by("coord_y")
     row_chosen = [step.chosen for step in row_steps]
     if len(set(row_chosen)) == 1:

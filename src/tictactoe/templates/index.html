@@ -58,10 +58,13 @@
             {% endif %}
         </div>
     {% endfor %}
+    <a href="{% url 'register' %}">Зарегистрироваться</a> /
+    <a href="{% url 'login' %}">Войти</a>
     <form action="/tic-tac/create-new-game" method="post">
         {% csrf_token %}
         <input type="submit" value="Новая игра" class="new-game-btn">
     </form>
+
 </div>
 </body>
 </html>
